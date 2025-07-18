@@ -1,3 +1,4 @@
+import e from "express";
 import { prisma } from "../db.js"
 
 export class BoardModel {
@@ -7,8 +8,15 @@ export class BoardModel {
     }
 
     static async create(data) {
-        const newUser = await prisma.board.create({data : data});
-        return newUser;
+        try {
+            console.log("create mdeol");
+            const newUser = await prisma.board.create({ data: data });
+            return newUser;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+
     }
 
     static async getById(id) {
@@ -21,23 +29,38 @@ export class BoardModel {
 
     static async update(id, data) {
         try {
+            const { name, description } = data;
+            const updatedData = {};
+
+            if (name !== undefined) updatedData.name = name;
+            if (description !== undefined) updatedData.description = description;
+
             const updated = await prisma.board.update({
                 where: {
                     id: id
                 },
-                data: data
+                data: updatedData
             });
+
             return updated;
         } catch (error) {
             console.log(error);
         }
     }
 
+    static async patch(id, data) {
+        try {
 
-    static async delete(id){
+        } catch (error) {
+
+        }
+    }
+
+
+    static async delete(id) {
         try {
             const userDeleted = await prisma.board.delete({
-                where : {id:id}
+                where: { id: id }
             });
             return userDeleted;
         } catch (error) {
