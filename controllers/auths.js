@@ -31,7 +31,7 @@ export class AuthController {
 
                 res
                     .cookie('access_token', token, {
-                        httpOnly: false,
+                        httpOnly: true,
                         secure: process.env.NODE_ENV === 'production',
                         sameSite: 'lax',
                         maxAge: 1000 * 60 * 60
@@ -47,12 +47,16 @@ export class AuthController {
         }
     }
 
-    static async logout(req,res) {
+    static async logout(req, res) {
         try {
-            res.clearCookie('access_token')
-                .json({message : "Sesion cerrada"})
+            res.clearCookie('access_token', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'lax',
+            })
+                .json({ message: "Sesion cerrada" })
         } catch (error) {
-
+            res.status(500).json({ message: "Error interno del servidor" });
         }
     }
 
