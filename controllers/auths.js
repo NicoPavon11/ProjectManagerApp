@@ -34,7 +34,8 @@ export class AuthController {
                         httpOnly: true,
                         secure: process.env.NODE_ENV === 'production',
                         sameSite: 'lax',
-                        maxAge: 1000 * 60 * 60
+                        maxAge: 1000 * 60 * 60,
+                        path: '/'
                     })
                     .status(200)
                     .json({ message: "Login exitoso", user: { id: user.id, email: user.email, name: user.name } });
@@ -53,8 +54,9 @@ export class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'lax',
-            })
-                .json({ message: "Sesion cerrada" })
+                path: '/'  // Muy importante
+            }).json({ message: "Sesión cerrada" });
+
         } catch (error) {
             res.status(500).json({ message: "Error interno del servidor" });
         }
