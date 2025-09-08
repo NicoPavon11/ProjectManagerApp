@@ -13,7 +13,6 @@ export class BoardController {
 
     static async create(req, res) {
         try {
-            console.log("create controller");
             const newUser = await BoardModel.create(req.body);
             res.status(201).json(newUser);
         } catch (error) {

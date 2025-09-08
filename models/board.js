@@ -9,7 +9,6 @@ export class BoardModel {
 
     static async create(data) {
         try {
-            console.log("create mdeol");
             const newUser = await prisma.board.create({ data: data });
             return newUser;
         } catch (error) {

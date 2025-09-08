@@ -11,6 +11,7 @@ const port = 3000;
 
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(cors({
   origin: 'http://localhost:4200',
   credentials: true
@@ -22,9 +23,13 @@ app.disable('x-powered-by');
 app.get('/', (req, res) => {
     res.send('Holis')
 })
+app.use((req, res, next) => {
+  console.log("Cookies disponibles en app:", req.cookies);
+  next();
+});
 
-app.use('/user', userRouter);
-app.use('/board', boardRouter);
+app.use('/user',userRouter);
+app.use('/board',boardRouter);
 app.use('/task', taskRouter);
 app.use('/auth', authRouter);
 
