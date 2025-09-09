@@ -12,10 +12,28 @@ const port = 3000;
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors({
-  origin: 'http://localhost:4200',
-  credentials: true
-}));
+
+const allowedOrigins = ['http://localhost:4200', 'https://localhost:4200', 'https://projectmanagerapp-a59c.onrender.com']; 
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        // Permite peticiones si el origen está en la lista blanca
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('No permitido por CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
+// app.use(cors({
+//   origin: 'https://localhost:4200',
+//   credentials: true
+// }));
 app.disable('x-powered-by');
 
 
