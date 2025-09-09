@@ -32,11 +32,12 @@ export class AuthController {
                 res
                     .cookie('access_token', token, {
                         httpOnly: true,
-                        secure: true ,
-// process.env.NODE_ENV === 'production',
+                        secure: true,
+                        // process.env.NODE_ENV === 'production',
                         sameSite: 'none',
-                        maxAge: 1000 * 60 * 60 ,
-                        path: '/'
+                        maxAge: 1000 * 60 * 60,
+                        path: '/',
+                        domain: '.onrender.com'
                     })
                     .status(200)
                     .json({ message: "Login exitoso", user: { id: user.id, email: user.email, name: user.name } });
