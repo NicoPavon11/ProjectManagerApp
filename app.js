@@ -38,8 +38,10 @@ app.disable('x-powered-by');
 
 
 
+
 app.get('/', (req, res) => {
-    res.send('Holis')
+  
+    res.send(process.env.SECRET_KEY);
 })
 app.use((req, res, next) => {
   console.log("Cookies disponibles en app:", req.cookies);
